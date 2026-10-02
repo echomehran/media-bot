@@ -3,7 +3,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
-from music_bot.bot.handlers.start import router as start_router
+from music_bot.bot.router import router
 from music_bot.config.settings import Settings
 
 
@@ -12,7 +12,7 @@ async def main() -> None:
     bot = Bot(token=settings.bot_token)
     dispatcher = Dispatcher()
 
-    dispatcher.include_router(start_router)
+    dispatcher.include_router(router)
 
     logging.basicConfig(level=logging.INFO)
 
