@@ -10,7 +10,6 @@ jobs:
 
     env:
       BOT_TOKEN: test-token
-      DATABASE_URL: postgresql+asyncpg://music_bot:test@localhost:5432/music_bot
 
     services:
       postgres:
@@ -18,11 +17,11 @@ jobs:
         env:
           POSTGRES_USER: music_bot
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: music_bot
+          POSTGRES_DB: music_bot_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U music_bot -d music_bot_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -41,6 +40,15 @@ jobs:
 
       - name: Install dependencies
         run: uv sync --locked --dev
+
+      - name: Configure test database
+        run: |
+          printf '%s\n' \
+            'DATABASE_URL=postgresql+asyncpg://music_bot:test@localhost:5432/music_bot_test' \
+            > .env.test
+
+      - name: Run database migrations
+        run: uv run alembic -x env_file=.env.test upgrade head
 
       - name: Run Ruff
         run: uv run ruff check .
