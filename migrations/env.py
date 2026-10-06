@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from music_bot.config.settings import Settings
+from music_bot.config.settings import DatabaseSettings
 from music_bot.models.base import Base
 from music_bot.models.user import User  # noqa: F401
 
@@ -14,7 +14,30 @@ from music_bot.models.user import User  # noqa: F401
 # access to the values within the .ini file in use.
 config = context.config
 
-settings = Settings()
+# `-x` is Alembic's built-in mechanism for passing custom runtime
+# arguments to `env.py`.
+#
+# We use it to select an alternative dotenv file when a command needs
+# to target a different database, such as the dedicated test database.
+#
+# Example:
+#
+#     uv run alembic -x env_file=.env.test upgrade head
+#
+# When no `env_file` argument is provided, normal development commands
+# continue to use `.env`.
+x_args = context.get_x_argument(as_dictionary=True)
+env_file = x_args.get("env_file")
+
+settings = DatabaseSettings(
+    _env_file=env_file if env_file else ".env",
+)
+
+
+# Alembic's async engine configuration reads the database URL from its
+# `Config` object. The application settings layer remains responsible
+# for loading and validating that URL; Alembic only consumes the
+# already-resolved value.
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
