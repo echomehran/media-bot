@@ -1,10 +1,14 @@
 from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from music_bot.infrastructure.database.session import session_factory
 
+async def test_database_connection(session: AsyncSession):
+    """Verify that the integration-test database accepts SQL queries.
 
-async def test_database_connection():
-    async with session_factory() as session:
-        result = await session.execute(text("SELECT 1"))
+    `SELECT 1` is a minimal database connectivity check. It does not test
+    application behavior; it only proves that the test session can establish
+    a working PostgreSQL connection and execute a query.
+    """
+    result = await session.execute(text("SELECT 1"))
 
-        assert result.scalar_one() == 1
+    assert result.scalar_one() == 1
