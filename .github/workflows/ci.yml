@@ -15,13 +15,13 @@ jobs:
       postgres:
         image: postgres:18
         env:
-          POSTGRES_USER: music_bot
+          POSTGRES_USER: media_bot
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: music_bot_test
+          POSTGRES_DB: media_bot_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U music_bot -d music_bot_test"
+          --health-cmd "pg_isready -U media_bot -d media_bot_test"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -44,7 +44,7 @@ jobs:
       - name: Configure test database
         run: |
           printf '%s\n' \
-            'DATABASE_URL=postgresql+asyncpg://music_bot:test@localhost:5432/music_bot_test' \
+            'DATABASE_URL=postgresql+asyncpg://media_bot:test@localhost:5432/media_bot_test' \
             > .env.test
 
       - name: Run database migrations
