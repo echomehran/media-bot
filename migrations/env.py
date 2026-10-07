@@ -6,9 +6,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from music_bot.config.settings import DatabaseSettings
-from music_bot.models.base import Base
-from music_bot.models.user import User  # noqa: F401
+from media_bot.config.settings import DatabaseSettings
+from media_bot.models.base import Base
+from media_bot.models.user import User  # noqa: F401
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

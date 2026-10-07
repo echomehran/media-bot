@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.types import Message
 
-from music_bot.services.search import SearchService
+from media_bot.services.search import SearchService
 
 router = Router()
 search_service = SearchService()

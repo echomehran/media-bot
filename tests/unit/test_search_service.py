@@ -1,6 +1,6 @@
 import pytest
 
-from music_bot.services.search import SearchService
+from media_bot.services.search import SearchService
 
 
 @pytest.mark.asyncio

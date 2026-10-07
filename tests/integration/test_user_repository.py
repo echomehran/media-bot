@@ -2,8 +2,8 @@ from datetime import UTC, datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from music_bot.models.user import User
-from music_bot.repositories.user import UserRepository
+from media_bot.models.user import User
+from media_bot.repositories.user import UserRepository
 
 
 async def test_get_user_by_telegram_id(session: AsyncSession):

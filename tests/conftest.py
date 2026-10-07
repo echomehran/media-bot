@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.pool import NullPool
 
-from music_bot.config.settings import DatabaseSettings
+from media_bot.config.settings import DatabaseSettings
 
 # Integration tests use a dedicated database configured through `.env.test`.
 #

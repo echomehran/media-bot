@@ -1,4 +1,4 @@
-from music_bot.config.settings import BotSettings, DatabaseSettings
+from media_bot.config.settings import BotSettings, DatabaseSettings
 
 
 def test_bot_settings_load_bot_token():

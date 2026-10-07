@@ -3,8 +3,8 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
-from music_bot.bot.router import router
-from music_bot.config.settings import BotSettings
+from media_bot.bot.router import router
+from media_bot.config.settings import BotSettings
 
 
 async def main() -> None:

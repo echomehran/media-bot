@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import BigInteger, DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from music_bot.models.base import Base
+from media_bot.models.base import Base
 
 
 class User(Base):
