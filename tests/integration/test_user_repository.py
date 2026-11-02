@@ -59,3 +59,39 @@ async def test_get_user_by_telegram_id_returns_none_for_unknown_id(
     result = await repository.get_by_telegram_id(999999999)
 
     assert result is None
+
+
+async def test_get_user_by_telegram_id_returns_the_matching_user(
+    session: AsyncSession,
+):
+    """Return the user with the requested telegram_id, not merely any user.
+
+    Two users are inserted so that the test distinguishes "the repository
+    filtered by telegram_id" from "the repository returned some row." With
+    only one row present, those two behaviours are indistinguishable.
+    """
+    session.add_all(
+        [
+            User(
+                telegram_id=100000003,
+                username="first",
+                first_name="First",
+                created_at=datetime.now(UTC),
+            ),
+            User(
+                telegram_id=100000004,
+                username="second",
+                first_name="Second",
+                created_at=datetime.now(UTC),
+            ),
+        ]
+    )
+    await session.commit()
+
+    repository = UserRepository(session)
+    result = await repository.get_by_telegram_id(100000004)
+
+    assert result is not None
+    assert result.telegram_id == 100000004
+    assert result.username == "second"
+    assert result.first_name == "Second"
