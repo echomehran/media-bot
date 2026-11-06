@@ -40,6 +40,7 @@ src/media_bot/
 ├── config/
 ├── infrastructure/
 ├── models/
+├── providers/
 ├── repositories/
 └── services/
 ```
@@ -183,6 +184,24 @@ return result.scalar_one_or_none()
 This separation keeps database-specific implementation details localized.
 
 Repositories should focus on persistence operations rather than becoming general-purpose business-logic containers.
+
+## Media Providers
+
+Media providers adapt a single external source of legally downloadable media
+(for example Jamendo or Pixabay) into a common shape.
+
+A provider is not a service: it does not coordinate an application use case,
+and it does not download files. It translates. The layers are:
+
+```text
+Handlers
+   ↓
+Services            (use cases; orchestrate)
+   ↓
+Providers           (source adapters; translate)
+   ↓
+External APIs
+```
 
 ## Database Sessions
 

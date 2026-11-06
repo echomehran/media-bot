@@ -68,6 +68,7 @@ media-bot/
 │       ├── config/
 │       ├── infrastructure/
 │       ├── models/
+│       ├── providers/
 │       ├── repositories/
 │       └── services/
 ├── tests/
